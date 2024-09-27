@@ -21,5 +21,5 @@ app.get("/", (req, res) => {
     res.send("Server Connected successfully")
 })
 app.listen(process.env.PORT || 5000, (req, res) => {
-    console.log("server is connected")
+    console.log("server is connected successfully")
 })
