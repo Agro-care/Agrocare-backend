@@ -37,7 +37,7 @@ exports.Login = async(req, res) => {
                 id: User._id,
                 name: User.name,
                 token: token,
-                verified: User.verified,
+                verified: User.verified ,
                 message: "Login Success",
                 email: User.email
             })
