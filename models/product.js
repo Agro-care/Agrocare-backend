@@ -24,7 +24,7 @@ const productSchema = mongoose.Schema({
         required: true,
     },
     images: [{
-        type: String, // URLs or paths to image files
+        type: String, 
     }],
     brand: {
         type: String,
