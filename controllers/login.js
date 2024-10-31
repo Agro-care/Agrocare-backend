@@ -4,15 +4,17 @@ const jwt = require("jsonwebtoken")
 const Emailvalidator = require("email-validator");
 
 exports.getUserDetails = async(req, res) => {
-    const userId = await req.userId
+    const {userId} = await req.body;
+    console.log(userId);
     try {
         const userData = await user.findById({ _id: userId })
-        const followerData = await followers.findById({ _id: userId })
-        res.status(200).json({ userData, followerData })
+        res.status(200).json({ userData })
     } catch (err) {
+        console.log(err)
         res.status(401).json({ message: err })
     }
 }
+
 
 exports.Login = async(req, res) => {
     try {
