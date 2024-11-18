@@ -1,51 +1,73 @@
 const mongoose = require("mongoose");
+const { Schema, Types } = mongoose; // Import Types for ObjectId
 
-const productSchema = mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    description: {
-        type: String,
-        required: true,
-    },
-    price: {
-        type: Number,
-        required: true,
-    },
-    stock: {
-        type: Number,
-        required: true,
-        default: 0
-    },
-    category: {
-        type: String,
-        required: true,
-    },
-    images: [{
+const ProductSchema = new Schema({
+    name: { 
         type: String, 
-    }],
-    brand: {
-        type: String,
-        required: true,
+        required: true, 
+        trim: true 
     },
-    rating: {
-        type: Number,
-        default: 0
+    description: { 
+        type: String, 
+        required: true 
     },
-    numReviews: {
-        type: Number,
-        default: 0
+    price: { 
+        type: Number, 
+        required: true 
     },
-    specifications: {
-        type: Map,
-        of: String,
+    currency: { 
+        type: String, 
+        default: 'USD' 
     },
-    createdAt: {
-        type: Date,
-        default: Date.now
+    farmer_id: { 
+        type: String, 
+        required: true 
     },
+    location: { 
+        type: String, 
+        required: true 
+    },
+    stock: { 
+        type: Number, 
+        required: true, 
+        default: 0 
+    },
+    unit: { 
+        type: String, 
+        required: true 
+    },
+    harvest_date: { 
+        type: Date, 
+        required: true 
+    },
+    shipping_cost: { 
+        type: Number, 
+        default: 0 
+    },
+    category: { 
+        type: String, 
+        required: true 
+    },
+    image: { 
+        type: String, 
+        required: true 
+    },
+    brand: { 
+        type: String, 
+        required: true 
+    },
+    rating: { 
+        type: Number, 
+        default: 0 
+    },
+    numReviews: { 
+        type: Number, 
+        default: 0 
+    },
+    specifications: { 
+        type: Map, 
+        of: String 
+    }
 }, { timestamps: true });
 
-module.exports = mongoose.model("product", productSchema);
+module.exports = mongoose.model("Product", ProductSchema);

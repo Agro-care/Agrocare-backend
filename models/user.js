@@ -82,7 +82,6 @@ const userSchema = new Schema({
   }
 });
 
-// Add methods to list and delete equipment for farmers
 userSchema.methods.listEquipment = function(equipmentData) {
   this.equipment.push(equipmentData);
   return this.save();
@@ -93,5 +92,5 @@ userSchema.methods.deleteEquipment = function(equipmentId) {
   return this.save();
 };
 
-const User = mongoose.model('user', userSchema);
-module.exports = User;
+const user = mongoose.model('user', userSchema);
+module.exports = user;
