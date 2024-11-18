@@ -73,13 +73,9 @@ exports.removeFromCart = async (req, res) => {
         const { userId, productId } = req.params;
         console.log(productId);
         const user = await User.findById(userId);
-        // console.log(user)
         if (!user) return res.status(404).json({ message: "User not found" });
-
         user.cart.map(item => console.log(item.product_id))
         user.cart = user.cart.filter(item => item.product_id.toString() !== productId);
-        // console.log(user.cart)
-
         await user.save();
         res.status(200).json({ message: "Product removed from cart", cart: user.cart });
     } catch (error) {

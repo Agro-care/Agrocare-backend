@@ -1,6 +1,7 @@
 const Product = require('../models/product'); // Import the Product model
 const fs = require('fs');
 const path = require('path');
+
 // Create a new product
 exports.createProduct = async (req, res) => {
     try {
@@ -12,6 +13,7 @@ exports.createProduct = async (req, res) => {
     }
 };
 
+// Import products from JSON file
 exports.importProducts = async () => {
     const filePath = path.join(__dirname, '../data/products.json');
     try {
@@ -22,7 +24,6 @@ exports.importProducts = async () => {
         console.error("Error inserting data:", error.message);
     }
 };
-
 
 // Get all products
 exports.getAllProducts = async (req, res) => {
@@ -68,6 +69,45 @@ exports.deleteProduct = async (req, res) => {
             return res.status(404).json({ message: 'Product not found' });
         }
         res.status(200).json({ message: 'Product deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Add a review to a product
+exports.addReview = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { userId, text, rating } = req.body;
+        console.log(id)
+
+        if (!text || !rating || rating < 1 || rating > 5) {
+            return res.status(400).json({ message: 'Invalid review data. Rating must be between 1 and 5.' });
+        }
+
+        const product = await Product.findById(id);
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        // Add review
+        const newReview = {
+            user: userId,
+            text,
+            rating,
+            createdAt: new Date(),
+        };
+
+        product.reviews.push(newReview);
+
+        // Update product rating and number of reviews
+        product.numReviews = product.reviews.length;
+        product.rating =
+            product.reviews.reduce((sum, review) => sum + review.rating, 0) / product.numReviews;
+
+        await product.save();
+
+        res.status(201).json({ message: 'Review added successfully', review: newReview });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

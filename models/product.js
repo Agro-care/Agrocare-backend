@@ -1,6 +1,29 @@
 const mongoose = require("mongoose");
 const { Schema, Types } = mongoose; // Import Types for ObjectId
 
+const ReviewSchema = new Schema({
+    user: { 
+        type: Types.ObjectId, 
+        ref: 'User', 
+        required: true 
+    }, // Reference to the user who wrote the review
+    text: { 
+        type: String, 
+        required: true, 
+        trim: true 
+    }, // Review text
+    rating: { 
+        type: Number, 
+        required: true, 
+        min: 1, 
+        max: 5 
+    }, // Rating between 1 and 5
+    createdAt: { 
+        type: Date, 
+        default: Date.now 
+    } // Timestamp for the review
+});
+
 const ProductSchema = new Schema({
     name: { 
         type: String, 
@@ -67,7 +90,8 @@ const ProductSchema = new Schema({
     specifications: { 
         type: Map, 
         of: String 
-    }
+    },
+    reviews: [ReviewSchema] // Array of embedded reviews
 }, { timestamps: true });
 
 module.exports = mongoose.model("Product", ProductSchema);

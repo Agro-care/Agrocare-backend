@@ -7,5 +7,7 @@ router.get('/products', productController.getAllProducts);       // Get all prod
 router.get('/products/:id', productController.getProductById);   // Get a single product by ID
 router.put('/products/:id', productController.updateProduct);    // Update a product by ID
 router.delete('/products/:id', productController.deleteProduct); // Delete a product by ID
+router.post('/products/:id/reviews', productController.addReview);
+
 
 module.exports = router;

@@ -67,6 +67,15 @@ const userSchema = new Schema({
       enum: ['available', 'rented'],
       default: 'available'
     },
+    contact_email:{
+      
+    },
+    contact_number:{
+
+    },
+    location:{
+
+    },
     created_at: {
       type: Date,
       default: Date.now
