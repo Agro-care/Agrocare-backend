@@ -1,14 +1,18 @@
 const express = require('express');
-const router = express.Router();
 const equipmentController = require('../controllers/equipmentController');
 
-// Add equipment (Only farmers)
-router.post('/:userId/equipment', equipmentController.addEquipment);
+const router = express.Router();
 
-// Update equipment (Only farmers)
-router.put('/:userId/equipment/:equipmentId', equipmentController.updateEquipment);
+// Route to add new equipment (only for farmers)
+router.post('/add-equipment', equipmentController.addEquipment);
 
-// Delete equipment (Only farmers)
-router.delete('/:userId/equipment/:equipmentId', equipmentController.deleteEquipment);
+// Route to update existing equipment (only for farmers)
+router.put('/update-equipment', equipmentController.updateEquipment);
+
+// Route to delete equipment (only for farmers)
+router.delete('/delete-equipment', equipmentController.deleteEquipment);
+
+// Route to get all listed equipment (available for all users)
+router.get('/get-all-equipments', equipmentController.getAllEquipments);
 
 module.exports = router;

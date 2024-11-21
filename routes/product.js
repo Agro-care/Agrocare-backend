@@ -8,6 +8,7 @@ router.get('/products/:id', productController.getProductById);   // Get a single
 router.put('/products/:id', productController.updateProduct);    // Update a product by ID
 router.delete('/products/:id', productController.deleteProduct); // Delete a product by ID
 router.post('/products/:id/reviews', productController.addReview);
+router.get('/top-rated', productController.getTopRatedProducts);
 
 
 module.exports = router;

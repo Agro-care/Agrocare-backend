@@ -25,6 +25,21 @@ exports.importProducts = async () => {
     }
 };
 
+// Get top-rated products
+exports.getTopRatedProducts = async (req, res) => {
+    try {
+        const topRatedProducts = await Product.find()
+            .sort({ rating: -1 }) // Sort by rating in descending order
+            .limit(5); // Limit the results to the top 5 products
+
+        res.status(200).json(topRatedProducts);
+        console.log(topRatedProducts)
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
 // Get all products
 exports.getAllProducts = async (req, res) => {
     try {
