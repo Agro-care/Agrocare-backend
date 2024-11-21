@@ -4,8 +4,8 @@ const jwt = require("jsonwebtoken")
 const Emailvalidator = require("email-validator");
 exports.createUser = async(req, res) => {
         try {
-            const { email, name, password } = req.body
-            console.log(email , name , password)
+            const { email, name, password , role } = req.body
+            console.log(email , name , password , role)
             const checkUser = await user.findOne({ "email": email })
             if (checkUser) {
                 res.status(404).json("email already available")
@@ -15,7 +15,8 @@ exports.createUser = async(req, res) => {
             const User = new user({
                 password: password,
                 email: email,
-                name
+                role: role,
+                name: name
             })
             const saltrounds = 10
             User.password = await bcrypt.hash(password, saltrounds)
@@ -27,7 +28,7 @@ exports.createUser = async(req, res) => {
                 name: User.name,
                 token: NewToken,
                 verified: User.verified,
-                message: "Register Success ! please activate your email to start",
+                message: "Register Success redirecting to home page",
                 email: User.email
             })
         } catch (err) {
