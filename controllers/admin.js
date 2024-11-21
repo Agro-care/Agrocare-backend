@@ -77,15 +77,47 @@ exports.updateProduct = async (req, res) => {
     }
 };
 
-exports.deleteProduct = async (req, res) => {
+exports.deleteUser = async (req, res) => {
     try {
-        const { productId } = req.params;
-        const product = await Product.findByIdAndDelete(productId);
-        if (!product) return res.status(404).json({ message: "Product not found" });
+        const { userId } = req.params;
+        const user = await User.findByIdAndDelete(userId);
+        if (!user) return res.status(404).json({ message: "User not found" });
 
-        res.status(200).json({ message: "Product deleted successfully" });
+        res.status(200).json({ message: "User deleted successfully" });
     } catch (error) {
-        res.status(500).json({ message: "Failed to delete product", error: error.message });
+        res.status(500).json({ message: "Failed to delete User", error: error.message });
     }
 };
 
+// Change User Role
+exports.changeUserRole = async (req, res) => {
+    try {
+        console.log("hello")
+        const { userId } = req.params; // Extract userId from request parameters
+        const { role } = req.body; // Extract new role from request body
+
+        // Validate the role
+        const validRoles = ['admin', 'farmer', 'user'];
+        if (!validRoles.includes(role)) {
+            return res.status(400).json({ message: "Invalid role provided. Allowed roles are 'admin', 'farmer', and 'user'." });
+        }
+
+        // Find the user by ID and update the role
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { role },
+            { new: true } // Return the updated document
+        );
+
+        // If user not found, send an error response
+        if (!updatedUser) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Return the updated user
+        res.status(200).json({ message: "User role updated successfully", user: updatedUser });
+    } catch (error) {
+        // Handle server errors
+        res.status(500).json({ message: "Failed to update user role", error: error.message });
+    }
+};

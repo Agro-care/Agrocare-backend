@@ -7,24 +7,26 @@ const {
     getAllProducts, 
     createProduct, 
     updateProduct, 
-    deleteProduct 
+    changeUserRole
 } = require('../controllers/admin.js');
-const checkAdmin = require('../middleware/checkAdmin'); // Middleware to ensure admin access
+// Middleware to ensure admin access
 
 const router = express.Router();
 
 // Admin Profile Management
-router.get('/admin/profile', checkAdmin, getAdminProfile);
-router.put('/admin/profile', checkAdmin, updateAdminProfile);
+router.get('/admin/profile',  getAdminProfile);
+router.put('/admin/profile',  updateAdminProfile);
 
 // User Management (Admin Only)
-router.get('/admin/users', checkAdmin, getAllUsers);
-router.delete('/admin/users/:userId', checkAdmin, deleteUser);
+router.get('/admin/users', getAllUsers);
+router.delete('/admin/users/:userId',  deleteUser);
 
 // Product Management (Admin Only)
-router.get('/admin/products', checkAdmin, getAllProducts);
-router.post('/admin/products', checkAdmin, createProduct);
-router.put('/admin/products/:productId', checkAdmin, updateProduct);
-router.delete('/admin/products/:productId', checkAdmin, deleteProduct);
+router.get('/admin/products',  getAllProducts);
+router.post('/admin/products',  createProduct);
+router.put('/admin/products/:productId',  updateProduct);
+router.put('/admin/users/:userId/role', changeUserRole);
+router.delete('/admin/users/:userId',  deleteUser);
 
 module.exports = router;
+ 
